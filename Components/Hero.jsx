@@ -148,7 +148,7 @@ const Hero = () => {
             {/* Background Glow for Card */}
             <div className="absolute -inset-10 bg-primary/10 blur-[80px] rounded-full opacity-50 pointer-events-none" />
 
-            <div className="relative mx-auto max-w-[400px] glass-card overflow-hidden">
+            <div className="relative mx-auto max-w-[400px] glass-card overflow-hidden will-change-transform">
               {/* Window Header */}
               <div className="bg-white/5 px-4 py-2.5 flex items-center justify-between border-b border-white/5">
                 <div className="flex space-x-1.5">
