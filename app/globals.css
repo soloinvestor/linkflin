@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #9499e8;
+  --color-primary-dark: #8388d7;
+  --color-secondary: #64748b;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-[#030303] text-zinc-100 antialiased;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility glass {
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@utility glass-card {
+  @apply glass rounded-2xl shadow-2xl;
+}
+
+@utility gradient-text {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-white via-white to-zinc-500;
+}
+
+@utility gradient-primary {
+  @apply bg-linear-to-r from-[#9499e8] to-[#6366f1];
+}
+
+.bg-mesh {
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(243, 67%, 74%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(243, 67%, 74%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(243, 67%, 74%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(243, 67%, 74%, 0.1) 0px, transparent 50%);
 }

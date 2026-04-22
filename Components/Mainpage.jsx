@@ -1,14 +1,21 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "./Layout/Navbar";
+import Hero from "./Hero";
+import Features from "./Features";
+import CTA from "./CTA";
+import Footer from "./Layout/Footer";
 
 const Mainpage = () => {
   return (
-    <div className="w-full min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="relative w-full min-h-screen bg-[#030303] bg-mesh selection:bg-[#9499e8]/30">
       <Navbar />
-      <main className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        {/* Page content goes here */}
-        <h2 className="text-4xl font-bold text-zinc-900 dark:text-white">Welcome to LinkFlin</h2>
+      <main className="relative">
+        <Hero />
+        <Features />
+        <CTA />
       </main>
+
+      <Footer />
     </div>
   );
 };
