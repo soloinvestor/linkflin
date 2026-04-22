@@ -4,11 +4,12 @@
   --color-primary: #9499e8;
   --color-primary-dark: #8388d7;
   --color-secondary: #64748b;
+  --color-background: #030303;
 }
 
 @layer base {
   body {
-    @apply bg-[#030303] text-zinc-100 antialiased;
+    @apply bg-background text-zinc-100 antialiased;
   }
 }
 

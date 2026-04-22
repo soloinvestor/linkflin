@@ -7,7 +7,7 @@ import Footer from "./Layout/Footer";
 
 const Mainpage = () => {
   return (
-    <div className="relative w-full min-h-screen bg-[#030303] bg-mesh selection:bg-[#9499e8]/30">
+    <div className="relative w-full min-h-screen bg-background bg-mesh selection:bg-primary/30">
       <Navbar />
       <main className="relative">
         <Hero />

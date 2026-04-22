@@ -46,9 +46,9 @@ const Features = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-1.5 rounded-full bg-[#9499e8]/10 border border-[#9499e8]/20 mb-6"
+            className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6"
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#9499e8]">Infrastructure</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">Infrastructure</span>
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -83,10 +83,10 @@ const Features = () => {
               className="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/5 p-10 transition-all duration-300"
             >
               <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#9499e8] shadow-[0_0_12px_#9499e8]" />
+                <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_12px_var(--color-primary)]" />
               </div>
 
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#9499e8]/10 text-[#9499e8] mb-8 group-hover:scale-110 group-hover:bg-[#9499e8] group-hover:text-white transition-all duration-500">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
                 <feature.icon className="h-7 w-7" />
               </div>
               <h3 className="text-xl font-bold text-white mb-4">{feature.name}</h3>

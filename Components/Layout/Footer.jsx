@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-transparent border-t border-white/5 relative overflow-hidden">
       {/* Footer Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-[#9499e8]/5 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-primary/5 blur-[100px] pointer-events-none" />
       
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 relative">
         <div className="xl:grid xl:grid-cols-3 xl:gap-20">
@@ -35,7 +35,7 @@ const Footer = () => {
                     height="8"
                     rx="2"
                     fill="#030303"
-                    stroke="#9499e8"
+                    stroke="var(--color-primary)"
                     strokeWidth="2"
                   />
                 </svg>

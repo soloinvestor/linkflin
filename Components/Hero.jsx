@@ -22,8 +22,8 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden pt-32 pb-20 lg:pt-48 lg:pb-32">
       {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-[#9499e8]/10 to-transparent pointer-events-none" />
-      <div className="absolute top-[10%] right-[10%] w-64 h-64 bg-[#9499e8]/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-linear-to-b from-primary/10 to-transparent pointer-events-none" />
+      <div className="absolute top-[10%] right-[10%] w-64 h-64 bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[20%] left-[5%] w-96 h-96 bg-[#6366f1]/10 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
@@ -36,8 +36,10 @@ const Hero = () => {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8"
             >
-              <div className="w-2 h-2 rounded-full bg-[#9499e8] animate-pulse" />
-              <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">v2.0 is live</span>
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
+                v2.0 is live
+              </span>
             </motion.div>
 
             <motion.h1
@@ -69,10 +71,12 @@ const Hero = () => {
             >
               {checklist.map((item) => (
                 <div key={item} className="flex items-center space-x-3 group">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#9499e8]/10 flex items-center justify-center group-hover:bg-[#9499e8]/20 transition-colors">
-                    <Check className="h-3 w-3 text-[#9499e8]" />
+                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Check className="h-3 w-3 text-primary" />
                   </div>
-                  <span className="text-sm font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors">{item}</span>
+                  <span className="text-sm font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                    {item}
+                  </span>
                 </div>
               ))}
             </motion.div>
@@ -84,19 +88,29 @@ const Hero = () => {
               className="mt-12 flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8"
             >
               <button className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#9499e8] to-[#6366f1] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300" />
-                <div className="relative rounded-xl bg-[#9499e8] px-8 py-5 text-base font-bold text-white hover:bg-[#8388d7] transition-all text-center">
+                <div className="absolute -inset-0.5 bg-linear-to-r from-primary to-[#6366f1] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300" />
+                <div className="relative rounded-xl bg-primary px-8 py-5 text-base font-bold text-white hover:bg-primary-dark transition-all text-center">
                   Create Your First Smart Link
                 </div>
               </button>
               <div className="flex items-center space-x-2">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-[#030303] bg-zinc-800" />
+                  {[
+                    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=60",
+                    "https://images.unsplash.com/photo-1615109398623-88346a601842?w=100&auto=format&fit=crop&q=60",
+                    "https://images.unsplash.com/photo-1508341591423-4347099e1f19?w=100&auto=format&fit=crop&q=60"
+                  ].map((url, i) => (
+                    <img
+                      key={i}
+                      src={url}
+                      alt={`User ${i + 1}`}
+                      className="w-8 h-8 rounded-full border-2 border-[#030303] object-cover"
+                    />
                   ))}
                 </div>
                 <p className="text-xs text-zinc-500 font-medium leading-snug">
-                  Join <span className="text-white">2,400+</span> creators <br />
+                  Join <span className="text-white">2,400+</span> creators{" "}
+                  <br />
                   earning more today.
                 </p>
               </div>
@@ -110,12 +124,16 @@ const Hero = () => {
             >
               <div className="flex items-center space-x-2 text-zinc-500">
                 <Shield className="h-4 w-4" />
-                <span className="text-xs font-semibold uppercase tracking-wider">Secure OAuth</span>
+                <span className="text-xs font-semibold uppercase tracking-wider">
+                  Secure OAuth
+                </span>
               </div>
               <div className="w-px h-4 bg-white/10" />
               <div className="flex items-center space-x-2 text-zinc-500">
                 <Lock className="h-4 w-4" />
-                <span className="text-xs font-semibold uppercase tracking-wider">Private Data</span>
+                <span className="text-xs font-semibold uppercase tracking-wider">
+                  Private Data
+                </span>
               </div>
             </motion.div>
           </div>
@@ -128,78 +146,114 @@ const Hero = () => {
             className="mt-16 lg:mt-0 relative"
           >
             {/* Background Glow for Card */}
-            <div className="absolute -inset-10 bg-[#9499e8]/10 blur-[80px] rounded-full opacity-50 pointer-events-none" />
-            
-            <div className="relative mx-auto max-w-[460px] glass-card overflow-hidden">
+            <div className="absolute -inset-10 bg-primary/10 blur-[80px] rounded-full opacity-50 pointer-events-none" />
+
+            <div className="relative mx-auto max-w-[400px] glass-card overflow-hidden">
               {/* Window Header */}
-              <div className="bg-white/5 px-4 py-4 flex items-center justify-between border-b border-white/5">
+              <div className="bg-white/5 px-4 py-2.5 flex items-center justify-between border-b border-white/5">
                 <div className="flex space-x-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                  <div className="w-2 h-2 rounded-full bg-white/10" />
+                  <div className="w-2 h-2 rounded-full bg-white/10" />
+                  <div className="w-2 h-2 rounded-full bg-white/10" />
                 </div>
-                <div className="bg-white/5 rounded-full px-4 py-1.5 text-[10px] text-zinc-400 font-medium border border-white/5 tracking-wide">
+                <div className="bg-white/5 rounded-full px-4 py-1 text-[10px] text-zinc-400 font-medium border border-white/5 tracking-wide">
                   linkflin.to/my-gear
                 </div>
-                <div className="w-10" />
+                <div className="w-8" />
               </div>
 
-              <div className="p-8 space-y-8">
+              <div className="p-6 space-y-6">
                 <div>
-                  <p className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase mb-3">Target URL</p>
+                  <p className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase mb-3">
+                    Target URL
+                  </p>
                   <div className="p-3 bg-white/5 rounded-lg border border-white/5">
-                    <p className="text-sm font-medium text-zinc-300 truncate">amazon.com/dp/B8DFK5Z33M?tag=user-20</p>
+                    <p className="text-sm font-medium text-zinc-300 truncate">
+                      amazon.com/dp/B8DFK5Z33M?tag=user-20
+                    </p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-[10px] font-bold text-[#9499e8] tracking-widest uppercase">Smart Routing Active</p>
+                    <p className="text-[10px] font-bold text-primary tracking-widest uppercase">
+                      Smart Routing Active
+                    </p>
                     <div className="flex space-x-1">
-                      <div className="w-1 h-1 rounded-full bg-[#9499e8]" />
-                      <div className="w-1 h-1 rounded-full bg-[#9499e8]/50" />
-                      <div className="w-1 h-1 rounded-full bg-[#9499e8]/20" />
+                      <div className="w-1 h-1 rounded-full bg-primary" />
+                      <div className="w-1 h-1 rounded-full bg-primary/50" />
+                      <div className="w-1 h-1 rounded-full bg-primary/20" />
                     </div>
                   </div>
-                  
+
                   {routes.map((route) => (
-                    <div key={route.country} className="flex items-center justify-between bg-white/5 rounded-xl p-3 px-4 border border-white/5 group hover:bg-white/10 transition-colors">
+                    <div
+                      key={route.country}
+                      className="flex items-center justify-between bg-white/5 rounded-xl p-3 px-4 border border-white/5 group hover:bg-white/10 transition-colors"
+                    >
                       <div className="flex items-center space-x-4">
-                        <span className="text-xl filter grayscale group-hover:grayscale-0 transition-all">{route.flag}</span>
-                        <span className="text-sm font-medium text-zinc-300">{route.country}</span>
+                        <span className="text-xl filter grayscale group-hover:grayscale-0 transition-all">
+                          {route.flag}
+                        </span>
+                        <span className="text-sm font-medium text-zinc-300">
+                          {route.country}
+                        </span>
                       </div>
                       <span className="text-[9px] font-bold text-zinc-500 uppercase px-2 py-1 rounded bg-white/5 border border-white/5">
                         {route.label}
                       </span>
                     </div>
                   ))}
-                  
-                  <div className="flex items-center justify-between bg-[#9499e8]/10 rounded-xl p-4 px-4 border border-[#9499e8]/20 mt-6 relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
+                  <div className="flex items-center justify-between bg-primary/10 rounded-xl p-3 px-4 border border-primary/20 mt-4 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                     <div className="flex items-center space-x-4">
-                      <div className="w-8 h-8 rounded-lg bg-[#9499e8]/20 flex items-center justify-center">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-[#9499e8]">
-                          <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                      <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          className="text-primary"
+                        >
+                          <rect
+                            x="5"
+                            y="2"
+                            width="14"
+                            height="20"
+                            rx="2"
+                            ry="2"
+                          />
                           <path d="M12 18h.01" />
                         </svg>
                       </div>
                       <div>
-                        <span className="text-sm font-bold text-white block">App Deep Linking</span>
-                        <span className="text-[10px] text-zinc-400 font-medium">Bypass browser directly to app</span>
+                        <span className="text-sm font-bold text-white block">
+                          App Deep Linking
+                        </span>
+                        <span className="text-[10px] text-zinc-400 font-medium">
+                          Bypass browser directly to app
+                        </span>
                       </div>
                     </div>
-                    <Check className="h-4 w-4 text-[#9499e8]" />
+                    <Check className="h-4 w-4 text-primary" />
                   </div>
                 </div>
               </div>
 
               {/* Window Footer */}
-              <div className="bg-white/5 px-8 py-4 border-t border-white/5 flex items-center justify-between">
+              <div className="bg-white/5 px-6 py-3 border-t border-white/5 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
-                  <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">System Healthy</span>
+                  <span className="text-[10px] font-bold text-green-500 uppercase tracking-wider">
+                    System Healthy
+                  </span>
                 </div>
-                <span className="text-[11px] font-bold text-zinc-500">Uptime: 99.99%</span>
+                <span className="text-[11px] font-bold text-zinc-500">
+                  Uptime: 99.99%
+                </span>
               </div>
             </div>
 
@@ -207,15 +261,21 @@ const Hero = () => {
             <div className="mt-12 flex flex-wrap justify-center lg:justify-start gap-x-8 gap-y-4">
               <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5">
                 <Globe className="h-3.5 w-3.5 text-zinc-500" />
-                <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">150+ countries</span>
+                <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">
+                  150+ countries
+                </span>
               </div>
               <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5">
                 <Zap className="h-3.5 w-3.5 text-zinc-500" />
-                <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">Fast Redirect</span>
+                <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">
+                  Fast Redirect
+                </span>
               </div>
               <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5">
                 <MousePointer2 className="h-3.5 w-3.5 text-zinc-500" />
-                <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">Real-time stats</span>
+                <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">
+                  Real-time stats
+                </span>
               </div>
             </div>
           </motion.div>
@@ -223,7 +283,9 @@ const Hero = () => {
 
         {/* Works With Section */}
         <div className="mt-32 pt-12 border-t border-white/5">
-          <p className="text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase mb-10 text-center lg:text-left">Integration Ecosystem</p>
+          <p className="text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase mb-10 text-center lg:text-left">
+            Integration Ecosystem
+          </p>
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-16 gap-y-8 opacity-40 hover:opacity-100 transition-opacity duration-500 grayscale brightness-200">
             <span className="text-lg font-bold">Amazon</span>
             <span className="text-lg font-bold">ShareASale</span>
@@ -239,4 +301,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
