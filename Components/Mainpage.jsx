@@ -16,10 +16,17 @@ const Mainpage = () => {
   const [renderBelowFold, setRenderBelowFold] = useState(false);
 
   useEffect(() => {
+    // Lock scroll during loading
+    if (isLoading) {
+      document.body.style.overflow = "hidden";
+    }
+
     if (!isLoading) {
       // Step 1: Show main container and Navbar/Hero
       const contentTimer = setTimeout(() => {
         setShowContent(true);
+        // Re-enable scroll when hero starts showing
+        document.body.style.overflow = "auto";
       }, 100);
 
       // Step 2: Render below-the-fold content after a short delay to keep initial entrance smooth
@@ -30,6 +37,7 @@ const Mainpage = () => {
       return () => {
         clearTimeout(contentTimer);
         clearTimeout(belowFoldTimer);
+        document.body.style.overflow = "auto"; // Cleanup
       };
     }
   }, [isLoading]);
