@@ -222,7 +222,7 @@ const Navbar = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 will-change-transform ${
           isScrolled
             ? "py-4 bg-background/80 backdrop-blur-xl border-b border-white/5 shadow-2xl"
             : "py-6 bg-transparent border-b border-transparent"
@@ -334,7 +334,7 @@ const Navbar = () => {
           {/* Slide-in Panel */}
           <div
             ref={modalRef}
-            className="absolute top-0 right-0 h-full w-full max-w-sm bg-[#0a0a0a] border-l border-white/5 shadow-2xl flex flex-col"
+            className="absolute top-0 right-0 h-full w-full max-w-sm bg-[#0a0a0a] border-l border-white/5 shadow-2xl flex flex-col will-change-transform"
           >
             {/* Modal Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/5">

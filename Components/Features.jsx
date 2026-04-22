@@ -78,15 +78,15 @@ const Features = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 * i }}
-              whileHover={{ y: -8, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
-              className="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/5 p-10 transition-all duration-300"
+              transition={{ delay: 0.05 * i }}
+              whileHover={{ y: -5 }}
+              className="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/5 p-10 transition-all duration-300 will-change-transform"
             >
               <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_12px_var(--color-primary)]" />
+                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
               </div>
 
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-8 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
                 <feature.icon className="h-7 w-7" />
               </div>
               <h3 className="text-xl font-bold text-white mb-4">{feature.name}</h3>

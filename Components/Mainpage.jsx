@@ -1,39 +1,67 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
+import Loader from "./Layout/Loader";
 import Navbar from "./Layout/Navbar";
 import Hero from "./Hero";
-import Features from "./Features";
-import CTA from "./CTA";
-import Footer from "./Layout/Footer";
-import Loader from "./Layout/Loader";
+
+// Lazy load non-critical sections to prevent initial hydration freeze
+const Features = lazy(() => import("./Features"));
+const CTA = lazy(() => import("./CTA"));
+const Footer = lazy(() => import("./Layout/Footer"));
 
 const Mainpage = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
+  const [renderBelowFold, setRenderBelowFold] = useState(false);
 
-  // Prevent flash of content before loader
   useEffect(() => {
-    // This state can be managed by the Loader component's onComplete callback
-  }, []);
+    if (!isLoading) {
+      // Step 1: Show main container and Navbar/Hero
+      const contentTimer = setTimeout(() => {
+        setShowContent(true);
+      }, 100);
+
+      // Step 2: Render below-the-fold content after a short delay to keep initial entrance smooth
+      const belowFoldTimer = setTimeout(() => {
+        setRenderBelowFold(true);
+      }, 800);
+
+      return () => {
+        clearTimeout(contentTimer);
+        clearTimeout(belowFoldTimer);
+      };
+    }
+  }, [isLoading]);
 
   return (
     <>
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
       
       <div 
-        className={`relative w-full min-h-screen bg-background bg-mesh selection:bg-primary/30 transition-opacity duration-1000 ${
-          isLoading ? "opacity-0" : "opacity-100"
+        className={`relative w-full min-h-screen bg-background bg-mesh selection:bg-primary/30 transition-opacity duration-700 ${
+          showContent ? "opacity-100" : "opacity-0"
         }`}
       >
-        {!isLoading && (
+        {showContent && (
           <>
             <Navbar />
             <main className="relative">
               <Hero />
-              <Features />
-              <CTA />
+              
+              <Suspense fallback={<div className="h-96" />}>
+                {renderBelowFold && (
+                  <>
+                    <Features />
+                    <CTA />
+                  </>
+                )}
+              </Suspense>
             </main>
-            <Footer />
+
+            <Suspense fallback={<div className="h-40" />}>
+              {renderBelowFold && <Footer />}
+            </Suspense>
           </>
         )}
       </div>
