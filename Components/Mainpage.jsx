@@ -4,9 +4,12 @@ import React, { useState, useEffect, Suspense, lazy } from "react";
 import Loader from "./Layout/Loader";
 import Navbar from "./Layout/Navbar";
 import Hero from "./Hero";
+import ClaudeIntegration from "./ClaudeIntegration";
 
 // Lazy load non-critical sections to prevent initial hydration freeze
 const Features = lazy(() => import("./Features"));
+const Comparison = lazy(() => import("./Comparison"));
+const Pricing = lazy(() => import("./Pricing"));
 const CTA = lazy(() => import("./CTA"));
 const Footer = lazy(() => import("./Layout/Footer"));
 
@@ -16,12 +19,24 @@ const Mainpage = () => {
   const [renderBelowFold, setRenderBelowFold] = useState(false);
 
   useEffect(() => {
+    // Check if loader has already been shown in this session
+    const hasLoaded = sessionStorage.getItem("hasLoaded");
+    if (hasLoaded) {
+      setIsLoading(false);
+      setShowContent(true);
+      setRenderBelowFold(true);
+      document.body.style.overflow = "auto";
+      return;
+    }
+
     // Lock scroll during loading
     if (isLoading) {
       document.body.style.overflow = "hidden";
     }
 
     if (!isLoading) {
+      // Set session flag once loading is complete
+      sessionStorage.setItem("hasLoaded", "true");
       // Step 1: Show main container and Navbar/Hero
       const contentTimer = setTimeout(() => {
         setShowContent(true);
@@ -59,11 +74,14 @@ const Mainpage = () => {
             <Navbar />
             <main className="relative">
               <Hero />
+              <ClaudeIntegration />
               
               <Suspense fallback={<div className="h-96" />}>
                 {renderBelowFold && (
                   <>
                     <Features />
+                    <Comparison />
+                    <Pricing />
                     <CTA />
                   </>
                 )}
