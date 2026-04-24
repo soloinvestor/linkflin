@@ -85,6 +85,9 @@ const LoginPage = () => {
           stagger: 0.1,
           duration: 0.8,
           ease: "power3.out",
+          onComplete: function () {
+            gsap.set(this.targets(), { clearProps: "all" });
+          },
         },
         "-=0.6",
       );
@@ -141,23 +144,14 @@ const LoginPage = () => {
               </div>
             )}
             {/* Social Logins */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="mb-8">
               <button
                 type="button"
-                className="login-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer"
+                className="login-element flex w-full mx-auto items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer"
               >
                 <Chrome className="w-4 h-4 text-zinc-400 group-hover:text-white" />
                 <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">
                   Google
-                </span>
-              </button>
-              <button
-                type="button"
-                className="login-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer"
-              >
-                <Github className="w-4 h-4 text-zinc-400 group-hover:text-white" />
-                <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">
-                  GitHub
                 </span>
               </button>
             </div>
@@ -193,31 +187,23 @@ const LoginPage = () => {
             </div>
 
             <div className="login-element flex items-center justify-between px-1">
-              <label className="flex items-center space-x-2 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded border-white/10 bg-white/5 text-primary focus:ring-primary/50"
-                />
-                <span className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-300 uppercase tracking-widest transition-colors">
-                  Remember me
-                </span>
-              </label>
-              <a
-                href="#"
-                className="text-[10px] font-black text-primary hover:text-white uppercase tracking-widest transition-colors"
-              >
+              <button className=" cursor-pointer text-[10px] font-black text-primary hover:text-white uppercase tracking-widest transition-colors">
                 Forgot Password?
-              </a>
+              </button>
             </div>
 
-            <button 
+            <button
               disabled={isLoading}
               className="login-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center justify-center space-x-2">
-                {isLoading && <Loader2 className="w-4 h-4 animate-spin text-white" />}
-                <span className={`${isLoading ? "text-white" : "group-hover:text-white"} transition-colors`}>
+                {isLoading && (
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
+                )}
+                <span
+                  className={`${isLoading ? "text-white" : "group-hover:text-white"} transition-colors`}
+                >
                   {isLoading ? "Logging in..." : "Log In Now"}
                 </span>
               </div>

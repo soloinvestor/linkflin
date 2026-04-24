@@ -11,6 +11,8 @@ export async function middleware(request) {
   // Paths that should not be accessible if logged in
   const authPaths = ["/login", "/signup"];
   const isAuthPath = authPaths.some(path => request.nextUrl.pathname.startsWith(path));
+  
+  const isHomePath = request.nextUrl.pathname === "/";
 
   if (isProtectedPath) {
     if (!token) {
@@ -22,18 +24,17 @@ export async function middleware(request) {
       await jwtVerify(token, secret);
       return NextResponse.next();
     } catch (error) {
-      console.error("Middleware JWT verification failed:", error);
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
 
-  if (isAuthPath && token) {
+  if ((isAuthPath || isHomePath) && token) {
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       await jwtVerify(token, secret);
       return NextResponse.redirect(new URL("/dashboard", request.url));
     } catch (error) {
-      // Token invalid, allow access to login/signup
+      // Token invalid, allow access to paths
       return NextResponse.next();
     }
   }
@@ -42,5 +43,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/signup"],
+  matcher: ["/", "/dashboard/:path*", "/login", "/signup"],
 };

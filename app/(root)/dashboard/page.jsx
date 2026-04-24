@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import {
   LayoutDashboard,
@@ -19,6 +19,27 @@ import { useRouter } from "next/navigation";
 const Dashboard = () => {
   const router = useRouter();
   const containerRef = useRef(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        const data = await res.json();
+        if (res.ok) {
+          setUser(data.user);
+        } else {
+          router.push("/login");
+        }
+      } catch (err) {
+        console.error("Fetch user error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [router]);
 
   const handleLogout = async () => {
     try {
@@ -181,7 +202,7 @@ const Dashboard = () => {
             <div>
               <h1 className="text-3xl font-black text-white mb-2">Dashboard</h1>
               <p className="text-zinc-500 font-medium">
-                Welcome back, Samarth!
+                Welcome back, {user?.firstName || "Creator"}!
               </p>
             </div>
             <button className="flex items-center space-x-3 bg-white text-black px-6 py-3 rounded-xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_-5px_rgba(255,255,255,0.2)]">
