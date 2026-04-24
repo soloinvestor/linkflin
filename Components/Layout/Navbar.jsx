@@ -3,8 +3,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useScroll } from "framer-motion";
 import gsap from "gsap";
+import Link from "next/link";
 
-const NAV_ITEMS = ["Features", "Pricing", "Enterprise", "Docs"];
+const NAV_ITEMS = ["Features", "Pricing", "FAQ"];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -230,8 +231,8 @@ const Navbar = () => {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
-          <div
-            ref={logoRef}
+          <Link
+            href="/"
             className="flex items-center space-x-3 cursor-pointer group"
           >
             <div className="relative flex items-center justify-center">
@@ -272,7 +273,7 @@ const Navbar = () => {
             <span className="text-2xl font-black tracking-tight text-white uppercase italic">
               linkflin
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Links */}
           <div
@@ -296,15 +297,21 @@ const Navbar = () => {
             ref={actionsRef}
             className="hidden lg:flex items-center space-x-8"
           >
-            <button className="text-xs font-bold cursor-pointer uppercase tracking-widest text-zinc-500 hover:text-white transition-colors">
+            <Link
+              href="/login"
+              className="text-xs font-bold cursor-pointer uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
+            >
               Log In
-            </button>
-            <button className="relative overflow-hidden cursor-pointer group rounded-full bg-white px-8 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 active:scale-95">
+            </Link>
+            <Link
+              href="/signup"
+              className="relative overflow-hidden cursor-pointer group rounded-full bg-white px-8 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 active:scale-95"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative z-10 group-hover:text-white transition-colors">
                 Start Free
               </span>
-            </button>
+            </Link>
           </div>
 
           {/* Hamburger Button (mobile) */}
@@ -380,17 +387,25 @@ const Navbar = () => {
 
             <div
               ref={modalActionsRef}
-              className="p-8 space-y-4 border-t border-white/5"
+              className="p-8 space-y-4 border-t border-white/5 bg-[#0a0a0a]"
             >
-              <button className="w-full py-4 text-sm font-bold cursor-pointer uppercase tracking-widest text-zinc-400 hover:text-white transition-colors border border-white/10 rounded-xl hover:border-white/20">
+              <Link
+                href="/login"
+                onClick={closeMenu}
+                className="block w-full py-4 text-sm text-center font-bold uppercase tracking-widest text-zinc-400 border border-white/10 rounded-xl active:bg-white/5 active:text-white transition-all"
+              >
                 Log In
-              </button>
-              <button className="w-full relative overflow-hidden cursor-pointer group rounded-xl bg-white py-4 text-sm font-bold uppercase tracking-widest text-black transition-all hover:scale-[1.02] active:scale-[0.98]">
-                <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
-                <span className="relative z-10 group-hover:text-white transition-colors">
+              </Link>
+              <Link
+                href="/signup"
+                onClick={closeMenu}
+                className="block w-full relative overflow-hidden rounded-xl bg-white py-4 text-sm text-center font-bold uppercase tracking-widest text-black active:scale-[0.98] transition-all"
+              >
+                <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-active:opacity-100 transition-opacity" />
+                <span className="relative z-10 group-active:text-white transition-colors">
                   Start Free
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
