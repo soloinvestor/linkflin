@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useScroll } from "framer-motion";
 import gsap from "gsap";
 import Link from "next/link";
@@ -219,6 +220,29 @@ const Navbar = () => {
       );
   }, []);
 
+  const router = useRouter();
+
+  const handleNav = useCallback(
+    (e, href) => {
+      if (href.startsWith("#")) {
+        if (isMenuOpen) closeMenu();
+        return;
+      }
+
+      e.preventDefault();
+
+      if (isMenuOpen) {
+        closeMenu();
+        setTimeout(() => {
+          router.push(href);
+        }, 150);
+      } else {
+        router.push(href);
+      }
+    },
+    [isMenuOpen, closeMenu, router],
+  );
+
   return (
     <>
       <nav
@@ -299,12 +323,14 @@ const Navbar = () => {
           >
             <Link
               href="/login"
+              onClick={(e) => handleNav(e, "/login")}
               className="text-xs font-bold cursor-pointer uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
             >
               Log In
             </Link>
             <Link
               href="/signup"
+              onClick={(e) => handleNav(e, "/signup")}
               className="relative overflow-hidden cursor-pointer group rounded-full bg-white px-8 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -391,14 +417,14 @@ const Navbar = () => {
             >
               <Link
                 href="/login"
-                onClick={closeMenu}
+                onClick={(e) => handleNav(e, "/login")}
                 className="block w-full py-4 text-sm text-center font-bold uppercase tracking-widest text-zinc-400 border border-white/10 rounded-xl active:bg-white/5 active:text-white transition-all"
               >
                 Log In
               </Link>
               <Link
                 href="/signup"
-                onClick={closeMenu}
+                onClick={(e) => handleNav(e, "/signup")}
                 className="block w-full relative overflow-hidden rounded-xl bg-white py-4 text-sm text-center font-bold uppercase tracking-widest text-black active:scale-[0.98] transition-all"
               >
                 <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-active:opacity-100 transition-opacity" />

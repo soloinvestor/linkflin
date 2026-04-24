@@ -63,7 +63,7 @@ const Mainpage = () => {
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
       
       {/* Background Mesh - Separated from main content to prevent scroll/click blocking */}
-      <div className="bg-mesh" aria-hidden="true" />
+      <div className="bg-mesh will-change-transform" aria-hidden="true" />
 
       <div 
         className={`relative w-full min-h-screen bg-background selection:bg-primary/30 transition-opacity duration-700 ${
