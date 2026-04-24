@@ -20,8 +20,14 @@ const Dashboard = () => {
   const router = useRouter();
   const containerRef = useRef(null);
 
-  const handleLogout = () => {
-    router.push("/");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.push("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+      router.push("/"); // Fallback
+    }
   };
 
   useEffect(() => {

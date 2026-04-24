@@ -1,14 +1,53 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { ArrowLeft, Mail, Lock, Github, Chrome } from "lucide-react";
+import { ArrowLeft, Mail, Lock, Github, Chrome, Loader2 } from "lucide-react";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const containerRef = useRef(null);
   const formRef = useRef(null);
   const backgroundRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Invalid credentials");
+      }
+
+      router.push("/dashboard");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -95,7 +134,12 @@ const LoginPage = () => {
             </p>
           </div>
 
-          <form ref={formRef} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="login-element p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-black uppercase tracking-widest text-center">
+                {error}
+              </div>
+            )}
             {/* Social Logins */}
             <div className="grid grid-cols-2 gap-4 mb-8">
               <button
@@ -124,6 +168,10 @@ const LoginPage = () => {
               </div>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
                 placeholder="Email Address"
                 className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
               />
@@ -135,6 +183,10 @@ const LoginPage = () => {
               </div>
               <input
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
                 placeholder="Password"
                 className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
               />
@@ -158,11 +210,17 @@ const LoginPage = () => {
               </a>
             </div>
 
-            <button className="login-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-4">
+            <button 
+              disabled={isLoading}
+              className="login-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10 group-hover:text-white transition-colors">
-                Log In Now
-              </span>
+              <div className="relative z-10 flex items-center justify-center space-x-2">
+                {isLoading && <Loader2 className="w-4 h-4 animate-spin text-white" />}
+                <span className={`${isLoading ? "text-white" : "group-hover:text-white"} transition-colors`}>
+                  {isLoading ? "Logging in..." : "Log In Now"}
+                </span>
+              </div>
             </button>
           </form>
 

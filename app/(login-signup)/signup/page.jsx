@@ -1,14 +1,55 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { ArrowLeft, Mail, Lock, User, Github, Chrome, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Mail, Lock, User, Github, Chrome, ShieldCheck, Loader2 } from "lucide-react";
 
 const SignupPage = () => {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const containerRef = useRef(null);
   const formRef = useRef(null);
   const backgroundRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      router.push("/dashboard");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -80,7 +121,12 @@ const SignupPage = () => {
             <p className="signup-element text-sm text-zinc-500 font-medium">Join 5,000+ creators optimizing their earnings</p>
           </div>
 
-          <form ref={formRef} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="signup-element p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-black uppercase tracking-widest text-center">
+                {error}
+              </div>
+            )}
             {/* Social Logins */}
             <div className="grid grid-cols-2 gap-4 mb-6">
               <button type="button" className="signup-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer">
@@ -100,6 +146,10 @@ const SignupPage = () => {
                 </div>
                 <input 
                   type="text" 
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
                   placeholder="First Name"
                   className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
                 />
@@ -110,6 +160,10 @@ const SignupPage = () => {
                 </div>
                 <input 
                   type="text" 
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
                   placeholder="Last Name"
                   className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
                 />
@@ -122,6 +176,10 @@ const SignupPage = () => {
               </div>
               <input 
                 type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
                 placeholder="Work Email"
                 className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
               />
@@ -133,6 +191,10 @@ const SignupPage = () => {
               </div>
               <input 
                 type="password" 
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
                 placeholder="Create Password"
                 className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
               />
@@ -140,16 +202,24 @@ const SignupPage = () => {
 
             <div className="signup-element pt-2">
               <label className="flex items-start space-x-3 cursor-pointer group">
-                <input type="checkbox" className="mt-1 w-4 h-4 rounded border-white/10 bg-white/5 text-primary focus:ring-primary/50" />
+                <input type="checkbox" required className="mt-1 w-4 h-4 rounded border-white/10 bg-white/5 text-primary focus:ring-primary/50" />
                 <span className="text-[10px] leading-relaxed font-bold text-zinc-500 group-hover:text-zinc-300 uppercase tracking-widest transition-colors">
                   I agree to the <a href="#" className="text-primary hover:underline">Terms of Service</a> and <a href="#" className="text-primary hover:underline">Privacy Policy</a>.
                 </span>
               </label>
             </div>
 
-            <button className="signup-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-6">
+            <button 
+              disabled={isLoading}
+              className="signup-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10 group-hover:text-white transition-colors">Start Free Trial</span>
+              <div className="relative z-10 flex items-center justify-center space-x-2">
+                {isLoading && <Loader2 className="w-4 h-4 animate-spin text-white" />}
+                <span className={`${isLoading ? "text-white" : "group-hover:text-white"} transition-colors`}>
+                  {isLoading ? "Creating Account..." : "Start Free Trial"}
+                </span>
+              </div>
             </button>
           </form>
 
