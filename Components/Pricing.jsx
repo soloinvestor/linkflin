@@ -111,6 +111,7 @@ const Pricing = () => {
 
   return (
     <section
+      id="pricing"
       ref={containerRef}
       className="py-32 relative overflow-hidden pricing-section"
     >

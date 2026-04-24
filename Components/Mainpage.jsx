@@ -10,6 +10,7 @@ import ClaudeIntegration from "./ClaudeIntegration";
 const Features = lazy(() => import("./Features"));
 const Comparison = lazy(() => import("./Comparison"));
 const Pricing = lazy(() => import("./Pricing"));
+const FAQ = lazy(() => import("./FAQ"));
 const CTA = lazy(() => import("./CTA"));
 const Footer = lazy(() => import("./Layout/Footer"));
 
@@ -82,6 +83,7 @@ const Mainpage = () => {
                     <Features />
                     <Comparison />
                     <Pricing />
+                    <FAQ />
                     <CTA />
                   </>
                 )}

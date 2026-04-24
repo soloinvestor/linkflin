@@ -5,7 +5,7 @@ import { useScroll } from "framer-motion";
 import gsap from "gsap";
 import Link from "next/link";
 
-const NAV_ITEMS = ["Features", "Pricing", "Enterprise", "Docs"];
+const NAV_ITEMS = ["Features", "Pricing", "FAQ"];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -387,22 +387,22 @@ const Navbar = () => {
 
             <div
               ref={modalActionsRef}
-              className="p-8 space-y-4 border-t border-white/5"
+              className="p-8 space-y-4 border-t border-white/5 bg-[#0a0a0a]"
             >
               <Link
                 href="/login"
                 onClick={closeMenu}
-                className="w-full py-4 text-sm text-center font-bold cursor-pointer uppercase tracking-widest text-zinc-400 hover:text-white transition-colors border border-white/10 rounded-xl hover:border-white/20"
+                className="block w-full py-4 text-sm text-center font-bold uppercase tracking-widest text-zinc-400 border border-white/10 rounded-xl active:bg-white/5 active:text-white transition-all"
               >
                 Log In
               </Link>
               <Link
                 href="/signup"
                 onClick={closeMenu}
-                className="w-full relative overflow-hidden cursor-pointer group rounded-xl bg-white py-4 text-sm text-center font-bold uppercase tracking-widest text-black transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="block w-full relative overflow-hidden rounded-xl bg-white py-4 text-sm text-center font-bold uppercase tracking-widest text-black active:scale-[0.98] transition-all"
               >
-                <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
-                <span className="relative z-10 group-hover:text-white transition-colors">
+                <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-active:opacity-100 transition-opacity" />
+                <span className="relative z-10 group-active:text-white transition-colors">
                   Start Free
                 </span>
               </Link>
