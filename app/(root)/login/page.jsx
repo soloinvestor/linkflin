@@ -31,42 +31,53 @@ const LoginPage = () => {
       });
 
       // Entrance Animation
-      const tl = gsap.timeline();
-      
+      const tl = gsap.timeline({ delay: 0.2 });
+
       tl.from(".login-card", {
         y: 40,
         opacity: 0,
         duration: 1,
         ease: "power4.out",
-      })
-      .from(".login-element", {
-        y: 20,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.8,
-        ease: "power3.out",
-      }, "-=0.6");
+      }).from(
+        ".login-element",
+        {
+          y: 20,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.6",
+      );
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen w-full bg-[#030303] flex items-center justify-center p-4 overflow-hidden selection:bg-primary/30">
+    <div
+      ref={containerRef}
+      className="relative min-h-screen w-full bg-[#030303] flex items-center justify-center p-4 overflow-hidden selection:bg-primary/30"
+    >
       {/* Dynamic Background */}
-      <div ref={backgroundRef} className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div
+        ref={backgroundRef}
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+      >
         <div className="glow-1 absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-primary/10 blur-[120px] rounded-full" />
         <div className="glow-2 absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#6366f1]/10 blur-[150px] rounded-full" />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150" />
       </div>
 
       {/* Back to Home */}
-      <Link 
+      <Link
         href="/"
         className="absolute top-8 left-8 flex items-center space-x-2 text-zinc-500 hover:text-white transition-colors group z-20"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-        <span className="text-xs font-black uppercase tracking-[0.2em]">Back to Linkflin</span>
+        <span className="text-xs font-black uppercase tracking-[0.2em]">
+          Back to Linkflin
+        </span>
       </Link>
 
       {/* Login Card */}
@@ -74,22 +85,36 @@ const LoginPage = () => {
         <div className="glass-card p-8 sm:p-10 border border-white/5 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
           {/* Subtle top glow */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-linear-to-r from-transparent via-primary/50 to-transparent" />
-          
+
           <div className="text-center mb-10">
-            <h1 className="login-element text-3xl font-black text-white mb-3 tracking-tight">Welcome Back</h1>
-            <p className="login-element text-sm text-zinc-500 font-medium">Enter your credentials to access your dashboard</p>
+            <h1 className="login-element text-3xl font-black text-white mb-3 tracking-tight">
+              Welcome Back
+            </h1>
+            <p className="login-element text-sm text-zinc-500 font-medium">
+              Enter your credentials to access your dashboard
+            </p>
           </div>
 
           <form ref={formRef} className="space-y-5">
             {/* Social Logins */}
             <div className="grid grid-cols-2 gap-4 mb-8">
-              <button type="button" className="login-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer">
+              <button
+                type="button"
+                className="login-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer"
+              >
                 <Chrome className="w-4 h-4 text-zinc-400 group-hover:text-white" />
-                <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">Google</span>
+                <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">
+                  Google
+                </span>
               </button>
-              <button type="button" className="login-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer">
+              <button
+                type="button"
+                className="login-element flex items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer"
+              >
                 <Github className="w-4 h-4 text-zinc-400 group-hover:text-white" />
-                <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">GitHub</span>
+                <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">
+                  GitHub
+                </span>
               </button>
             </div>
 
@@ -97,8 +122,8 @@ const LoginPage = () => {
               <div className="absolute left-4 text-zinc-500 group-focus-within:text-primary transition-colors">
                 <Mail className="w-4 h-4" />
               </div>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="Email Address"
                 className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
               />
@@ -108,8 +133,8 @@ const LoginPage = () => {
               <div className="absolute left-4 text-zinc-500 group-focus-within:text-primary transition-colors">
                 <Lock className="w-4 h-4" />
               </div>
-              <input 
-                type="password" 
+              <input
+                type="password"
                 placeholder="Password"
                 className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
               />
@@ -117,22 +142,39 @@ const LoginPage = () => {
 
             <div className="login-element flex items-center justify-between px-1">
               <label className="flex items-center space-x-2 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-white/10 bg-white/5 text-primary focus:ring-primary/50" />
-                <span className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-300 uppercase tracking-widest transition-colors">Remember me</span>
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded border-white/10 bg-white/5 text-primary focus:ring-primary/50"
+                />
+                <span className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-300 uppercase tracking-widest transition-colors">
+                  Remember me
+                </span>
               </label>
-              <a href="#" className="text-[10px] font-black text-primary hover:text-white uppercase tracking-widest transition-colors">Forgot Password?</a>
+              <a
+                href="#"
+                className="text-[10px] font-black text-primary hover:text-white uppercase tracking-widest transition-colors"
+              >
+                Forgot Password?
+              </a>
             </div>
 
             <button className="login-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-4">
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10 group-hover:text-white transition-colors">Log In Now</span>
+              <span className="relative z-10 group-hover:text-white transition-colors">
+                Log In Now
+              </span>
             </button>
           </form>
 
           <div className="login-element mt-10 text-center">
             <p className="text-xs text-zinc-500 font-medium">
               Don't have an account?{" "}
-              <Link href="/signup" className="text-primary font-black uppercase tracking-widest hover:text-white transition-colors ml-1">Create Account</Link>
+              <Link
+                href="/signup"
+                className="text-primary font-black uppercase tracking-widest hover:text-white transition-colors ml-1"
+              >
+                Create Account
+              </Link>
             </p>
           </div>
         </div>

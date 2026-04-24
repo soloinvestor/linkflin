@@ -28,7 +28,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ delay: 0.1 });
 
       gsap.set(
         [
@@ -235,7 +235,7 @@ const Navbar = () => {
         closeMenu();
         setTimeout(() => {
           router.push(href);
-        }, 150);
+        }, 300);
       } else {
         router.push(href);
       }
@@ -323,6 +323,7 @@ const Navbar = () => {
           >
             <Link
               href="/login"
+              prefetch={false}
               onClick={(e) => handleNav(e, "/login")}
               className="text-xs font-bold cursor-pointer uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
             >
@@ -330,6 +331,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/signup"
+              prefetch={false}
               onClick={(e) => handleNav(e, "/signup")}
               className="relative overflow-hidden cursor-pointer group rounded-full bg-white px-8 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 active:scale-95"
             >
@@ -417,6 +419,7 @@ const Navbar = () => {
             >
               <Link
                 href="/login"
+                prefetch={false}
                 onClick={(e) => handleNav(e, "/login")}
                 className="block w-full py-4 text-sm text-center font-bold uppercase tracking-widest text-zinc-400 border border-white/10 rounded-xl active:bg-white/5 active:text-white transition-all"
               >
@@ -424,6 +427,7 @@ const Navbar = () => {
               </Link>
               <Link
                 href="/signup"
+                prefetch={false}
                 onClick={(e) => handleNav(e, "/signup")}
                 className="block w-full relative overflow-hidden rounded-xl bg-white py-4 text-sm text-center font-bold uppercase tracking-widest text-black active:scale-[0.98] transition-all"
               >

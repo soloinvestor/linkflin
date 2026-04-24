@@ -31,7 +31,7 @@ const SignupPage = () => {
       });
 
       // Entrance Animation
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ delay: 0.2 });
       
       tl.from(".signup-card", {
         y: 40,
