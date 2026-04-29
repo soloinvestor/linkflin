@@ -28,6 +28,11 @@ export async function middleware(request) {
     }
   }
 
+  const path = request.nextUrl.pathname;
+  if (!token && path.startsWith("/subscribe")) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   if ((isAuthPath || isHomePath) && token) {
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
@@ -43,5 +48,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/login", "/signup"],
+  matcher: ["/", "/dashboard/:path*", "/subscribe/:path*", "/login", "/signup"],
 };

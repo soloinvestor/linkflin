@@ -54,8 +54,11 @@ export async function POST(req) {
       },
     });
   } catch (error) {
-    console.error("Login error:", error);
-    return new Response(JSON.stringify({ message: "Internal server error" }), {
+    console.error("Login error details:", error);
+    return new Response(JSON.stringify({ 
+      message: "Internal server error", 
+      error: error.message 
+    }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

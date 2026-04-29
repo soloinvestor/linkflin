@@ -9,36 +9,55 @@ import {
   Settings,
   LogOut,
   Plus,
-  Globe,
   Zap,
-  TrendingUp,
-  ExternalLink,
+  Youtube,
+  ArrowRight,
+  User,
+  ShieldCheck,
+  ChevronRight,
+  Menu,
+  X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Dashboard = () => {
   const router = useRouter();
   const containerRef = useRef(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/auth/me");
-        const data = await res.json();
         if (res.ok) {
-          setUser(data.user);
+          const data = await res.json();
+          if (isMounted) setUser(data.user);
         } else {
-          router.push("/login");
+          if (isMounted) router.push("/login");
         }
       } catch (err) {
         console.error("Fetch user error:", err);
+        if (isMounted) router.push("/login");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
+
     fetchUser();
+
+    // Fail-safe to remove loading if it gets stuck for too long
+    const timeout = setTimeout(() => {
+      if (isMounted) setLoading(false);
+    }, 5000);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeout);
+    };
   }, [router]);
 
   const handleLogout = async () => {
@@ -47,106 +66,73 @@ const Dashboard = () => {
       router.push("/");
     } catch (error) {
       console.error("Logout error:", error);
-      router.push("/"); // Fallback
+      router.push("/");
     }
   };
 
   useEffect(() => {
+    if (loading) return;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.2 });
 
       tl.from(".dash-sidebar", {
-        x: -50,
+        x: -100,
         opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      })
-        .from(
-          ".dash-header",
-          {
-            y: -20,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.out",
+        duration: 1,
+        ease: "power4.out",
+      }).from(
+        ".dash-content-element",
+        {
+          y: 30,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
+          onComplete: function () {
+            gsap.set(this.targets(), { clearProps: "all" });
           },
-          "-=0.4",
-        )
-        .from(
-          ".dash-card",
-          {
-            y: 30,
-            opacity: 0,
-            stagger: 0.1,
-            duration: 0.8,
-            ease: "power4.out",
-          },
-          "-=0.3",
-        );
+        },
+        "-=0.6",
+      );
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [loading]);
 
-  const stats = [
-    {
-      label: "Total Clicks",
-      value: "124.5k",
-      change: "+12.5%",
-      icon: BarChart3,
-      color: "text-blue-400",
-    },
-    {
-      label: "Active Links",
-      value: "84",
-      change: "+4",
-      icon: LinkIcon,
-      color: "text-primary",
-    },
-    {
-      label: "Conversions",
-      value: "12.2k",
-      change: "+8.2%",
-      icon: Zap,
-      color: "text-yellow-400",
-    },
-    {
-      label: "Revenue",
-      value: "$4,250",
-      change: "+15.3%",
-      icon: TrendingUp,
-      color: "text-green-400",
-    },
-  ];
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
-  const recentLinks = [
+  const handleNavigation = (href) => {
+    router.push(href);
+  };
+
+  const menuItems = [
     {
-      name: "My Favorite Camera Gear 2024",
-      url: "linkflin.io/c/gear24",
-      clicks: "12.4k",
-      ctr: "8.2%",
+      icon: LayoutDashboard,
+      label: "Dashboard",
+      active: true,
+      href: "/dashboard",
     },
-    {
-      name: "The Ultimate Desk Setup",
-      url: "linkflin.io/c/desk",
-      clicks: "8.1k",
-      ctr: "6.5%",
-    },
-    {
-      name: "Creator Essentials Pack",
-      url: "linkflin.io/c/essentials",
-      clicks: "3.2k",
-      ctr: "9.1%",
-    },
+    { icon: LinkIcon, label: "Links", href: "/dashboard/links" },
+    { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
+    { icon: Zap, label: "Auto-Convert", href: "/dashboard/auto-convert" },
+    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
   ];
 
   return (
     <div
       ref={containerRef}
-      className="flex min-h-screen bg-[#030303] text-white selection:bg-primary/30"
+      className="flex min-h-screen bg-[#030303] text-white selection:bg-primary/30 font-sans"
     >
-      {/* Sidebar */}
-      <aside className="dash-sidebar hidden lg:flex flex-col w-72 bg-white/[0.02] border-r border-white/5 p-8 relative z-20">
-        <div className="flex items-center space-x-3 mb-12">
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-white/5 p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <LinkIcon className="w-5 h-5 text-white" />
           </div>
@@ -154,139 +140,199 @@ const Dashboard = () => {
             linkflin
           </span>
         </div>
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="p-2 text-zinc-400 hover:text-white transition-colors"
+        >
+          {isSidebarOpen ? <X /> : <Menu />}
+        </button>
+      </div>
 
-        <nav className="flex-1 space-y-2">
-          {[
-            { icon: LayoutDashboard, label: "Overview", active: true },
-            { icon: LinkIcon, label: "My Links" },
-            { icon: BarChart3, label: "Analytics" },
-            { icon: Globe, label: "Geo-Rules" },
-            { icon: Settings, label: "Settings" },
-          ].map((item, i) => (
-            <a
-              key={i}
-              href="#"
-              className={`flex items-center space-x-4 px-4 py-3 rounded-xl transition-all ${
-                item.active
-                  ? "bg-primary/10 text-primary border border-primary/20"
-                  : "text-zinc-500 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="text-xs font-black uppercase tracking-widest">
-                {item.label}
-              </span>
-            </a>
-          ))}
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`
+        dash-sidebar fixed lg:static inset-y-0 left-0 z-40 w-72 bg-[#050505] border-r border-white/5 flex flex-col p-8 transition-transform duration-300
+        ${isSidebarOpen ? "translate-x-0 shadow-[20px_0_50px_rgba(0,0,0,0.5)]" : "-translate-x-full lg:translate-x-0"}
+      `}
+      >
+        {/* Logo */}
+        <div className="flex items-center space-x-3 mb-12">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.3)]">
+            <LinkIcon className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-black uppercase italic tracking-tight">
+            linkflin
+          </span>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 space-y-1">
+          {menuItems.map((item, i) => {
+            const isActive = item.href === "/dashboard"; // Simplified for now, can use usePathname later
+            return (
+              <button
+                onClick={() => handleNavigation(item.href)}
+                key={i}
+                className={`w-full cursor-pointer flex items-center space-x-4 px-4 py-3.5 rounded-2xl transition-all group ${
+                  isActive
+                    ? "bg-primary/10 text-primary border border-primary/10 shadow-[0_0_30px_rgba(99,102,241,0.05)]"
+                    : "text-zinc-500 hover:text-white hover:bg-white/[0.03]"
+                }`}
+              >
+                <item.icon
+                  className={`w-5 h-5 transition-transform group-hover:scale-110 ${isActive ? "text-primary" : "text-zinc-500"}`}
+                />
+                <span className="text-xs font-black uppercase tracking-widest">
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
         </nav>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center space-x-4 px-4 py-3 text-zinc-500 hover:text-red-400 transition-colors mt-auto group"
-        >
-          <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          <span className="text-xs font-black uppercase tracking-widest">
-            Sign Out
-          </span>
-        </button>
+        {/* Sidebar Bottom Profile */}
+        <div className="mt-auto pt-8 border-t border-white/5 space-y-6">
+          <div className="flex items-center space-x-4 px-2">
+            <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary/20 to-secondary/20 border border-white/10 flex items-center justify-center text-primary font-black shadow-inner">
+              {user?.firstName?.[0] || "U"}
+            </div>
+            <div className="flex-1 min-w-0">
+              <h4 className="text-xs font-black text-white truncate uppercase tracking-widest">
+                {user?.firstName || "Creator"}
+              </h4>
+              <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mt-0.5">
+                Free Plan
+              </p>
+            </div>
+            <button className="text-zinc-600 hover:text-primary transition-colors">
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center space-x-4 px-4 py-3 text-zinc-500 hover:text-red-400 transition-all group rounded-2xl hover:bg-red-500/5"
+          >
+            <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-xs font-black uppercase tracking-widest">
+              Logout
+            </span>
+          </button>
+
+          <div className="flex items-center justify-center space-x-4 text-[9px] font-black uppercase tracking-widest text-zinc-700">
+            <Link href="#" className="hover:text-zinc-400 transition-colors">
+              Terms
+            </Link>
+            <span className="w-1 h-1 bg-zinc-800 rounded-full" />
+            <Link href="#" className="hover:text-zinc-400 transition-colors">
+              Privacy
+            </Link>
+          </div>
+        </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 lg:p-12 relative">
-        {/* Background mesh */}
-        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <main className="flex-1 p-4 sm:p-6 lg:p-12 pt-24 lg:pt-12 relative overflow-y-auto">
+        {/* Aesthetic Gradients */}
+        <div className="absolute top-0 right-0 w-[60%] h-[60%] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-secondary/5 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 max-w-6xl mx-auto">
-          {/* Header */}
-          <header className="dash-header flex items-center justify-between mb-12">
-            <div>
-              <h1 className="text-3xl font-black text-white mb-2">Dashboard</h1>
-              <p className="text-zinc-500 font-medium">
-                Welcome back, {user?.firstName || "Creator"}!
-              </p>
-            </div>
-            <button className="flex items-center space-x-3 bg-white text-black px-6 py-3 rounded-xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_-5px_rgba(255,255,255,0.2)]">
-              <Plus className="w-4 h-4" />
-              <span>Create New Link</span>
-            </button>
+        <div className="relative z-10 max-w-6xl">
+          {/* Welcome Header */}
+          <header className="dash-content-element mb-10 lg:mb-12">
+            <h1 className="text-3xl lg:text-4xl font-black text-white mb-2 lg:mb-3 tracking-tight">
+              Welcome, {user?.firstName || "Mr"}!
+            </h1>
+            <p className="text-zinc-500 text-xs lg:text-sm font-medium">
+              Ready to stop losing affiliate commissions?
+            </p>
           </header>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {stats.map((stat, i) => (
-              <div
-                key={i}
-                className="dash-card glass-card p-6 border border-white/5 rounded-3xl hover:border-white/10 transition-colors group"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-xl bg-white/5 ${stat.color}`}>
-                    <stat.icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[10px] font-black text-green-400 px-2 py-1 bg-green-400/10 rounded-lg">
-                    {stat.change}
-                  </span>
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {/* YouTube Auto-Convert Card */}
+            <div className="dash-content-element group relative">
+              <div className="glass-card p-6 lg:p-10 border border-white/5 rounded-[2rem] lg:rounded-[2.5rem] bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 h-full">
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 lg:mb-8 border border-red-500/20 group-hover:scale-110 transition-transform">
+                  <Youtube className="w-6 h-6 lg:w-7 lg:h-7 text-red-500" />
                 </div>
-                <p className="text-xs font-black text-zinc-500 uppercase tracking-widest mb-1">
-                  {stat.label}
-                </p>
-                <h3 className="text-2xl font-black text-white">{stat.value}</h3>
-              </div>
-            ))}
-          </div>
 
-          {/* Recent Links */}
-          <div className="dash-card glass-card border border-white/5 rounded-3xl p-8">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-black text-white">
-                Recent Smart Links
-              </h2>
-              <button className="text-xs font-black text-primary uppercase tracking-widest hover:text-white transition-colors">
-                View All Links
-              </button>
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-xl lg:text-2xl font-black text-white mb-3 lg:mb-4 tracking-tight">
+                    Auto-convert YouTube links
+                  </h3>
+                  <p className="text-zinc-500 text-xs lg:text-sm leading-relaxed max-w-sm">
+                    We scan your channel and upgrade all your affiliate links in
+                    ~2 minutes.
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <button className="flex items-center space-x-2 text-primary font-black uppercase tracking-widest text-[10px] lg:text-xs group/btn">
+                    <span>Start</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                  </button>
+                  <div className="px-3 py-1 lg:px-4 lg:py-1.5 rounded-full bg-primary/10 border border-primary/20">
+                    <span className="text-[9px] lg:text-[10px] font-black text-primary uppercase tracking-widest">
+                      Recommended
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              {recentLinks.map((link, i) => (
-                <div
-                  key={i}
-                  className="group flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-transparent hover:border-white/5 hover:bg-white/[0.05] transition-all"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
-                      <LinkIcon className="w-5 h-5 text-zinc-400 group-hover:text-primary transition-colors" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white mb-1">
-                        {link.name}
-                      </h4>
-                      <p className="text-[10px] font-medium text-zinc-500 uppercase tracking-widest">
-                        {link.url}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-12">
-                    <div className="hidden sm:block text-right">
-                      <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-1">
-                        Clicks
-                      </p>
-                      <p className="text-sm font-black text-white">
-                        {link.clicks}
-                      </p>
-                    </div>
-                    <div className="hidden sm:block text-right">
-                      <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-1">
-                        CTR
-                      </p>
-                      <p className="text-sm font-black text-white">
-                        {link.ctr}
-                      </p>
-                    </div>
-                    <button className="p-2 text-zinc-500 hover:text-white transition-colors">
-                      <ExternalLink className="w-4 h-4" />
-                    </button>
-                  </div>
+            {/* Smart Link Card */}
+            <div className="dash-content-element group relative">
+              <div className="glass-card p-6 lg:p-10 border border-white/5 rounded-[2rem] lg:rounded-[2.5rem] bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 h-full">
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-primary/10 flex items-center justify-center mb-6 lg:mb-8 border border-primary/20 group-hover:scale-110 transition-transform">
+                  <LinkIcon className="w-6 h-6 lg:w-7 lg:h-7 text-primary" />
                 </div>
-              ))}
+
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-xl lg:text-2xl font-black text-white mb-3 lg:mb-4 tracking-tight">
+                    Create a smart link
+                  </h3>
+                  <p className="text-zinc-500 text-xs lg:text-sm leading-relaxed max-w-sm">
+                    Paste any affiliate link and get a linkflin.io short link
+                    that works worldwide.
+                  </p>
+                </div>
+
+                <button className="flex items-center space-x-2 text-primary font-black uppercase tracking-widest text-[10px] lg:text-xs group/btn">
+                  <span>Create</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Verification Banner */}
+          <div className="dash-content-element mt-12">
+            <div className="p-6 glass-card border border-primary/20 bg-primary/5 rounded-[2rem] flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 rounded-xl bg-primary/20">
+                  <ShieldCheck className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-white uppercase tracking-widest">
+                    Account Verified
+                  </h4>
+                  <p className="text-[10px] text-zinc-500 font-medium mt-1">
+                    Your account is fully secured and ready for creator tools.
+                  </p>
+                </div>
+              </div>
+              <button className="bg-white text-black px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl">
+                Upgrade Plan
+              </button>
             </div>
           </div>
         </div>

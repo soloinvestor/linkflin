@@ -13,6 +13,7 @@ const LoginPage = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [error, setError] = useState("");
 
   const containerRef = useRef(null);
@@ -42,6 +43,18 @@ const LoginPage = () => {
       setError(err.message);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsGoogleLoading(true);
+    try {
+      const res = await fetch("/api/auth/google/url");
+      const { url } = await res.json();
+      window.location.href = url;
+    } catch (err) {
+      setError("Failed to initialize Google Login");
+      setIsGoogleLoading(false);
     }
   };
 
@@ -147,11 +160,17 @@ const LoginPage = () => {
             <div className="mb-8">
               <button
                 type="button"
-                className="login-element flex w-full mx-auto items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer"
+                disabled={isGoogleLoading}
+                onClick={handleGoogleLogin}
+                className="login-element flex w-full mx-auto items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Chrome className="w-4 h-4 text-zinc-400 group-hover:text-white" />
+                {isGoogleLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
+                ) : (
+                  <Chrome className="w-4 h-4 text-zinc-400 group-hover:text-white" />
+                )}
                 <span className="text-[10px] font-black text-zinc-400 group-hover:text-white uppercase tracking-widest">
-                  Google
+                  {isGoogleLoading ? "Connecting..." : "Google"}
                 </span>
               </button>
             </div>
@@ -196,7 +215,7 @@ const LoginPage = () => {
               disabled={isLoading}
               className="login-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className={`absolute inset-0 bg-linear-to-r from-primary to-secondary transition-opacity ${isLoading ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               <div className="relative z-10 flex items-center justify-center space-x-2">
                 {isLoading && (
                   <Loader2 className="w-4 h-4 animate-spin text-white" />
