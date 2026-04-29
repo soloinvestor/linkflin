@@ -96,23 +96,20 @@ const SignupPage = () => {
       // Entrance Animation
       const tl = gsap.timeline();
 
-      tl.from(".signup-card", {
-        y: 10,
-        opacity: 0,
-        scale: 0.99,
+      tl.to(".signup-card", {
+        y: 0,
+        opacity: 1,
+        scale: 1,
         duration: 0.4,
         ease: "power2.out",
-      }).from(
+      }).to(
         ".signup-element",
         {
-          y: 5,
-          opacity: 0,
+          y: 0,
+          opacity: 1,
           duration: 0.3,
           stagger: 0.05,
           ease: "power2.out",
-          onComplete: function () {
-            gsap.set(this.targets(), { clearProps: "all" });
-          },
         },
         "-=0.2",
       );
@@ -147,23 +144,23 @@ const SignupPage = () => {
       </Link>
 
       {/* Signup Card */}
-      <div className="signup-card relative w-full max-w-[480px] z-10">
+      <div className="signup-card opacity-0 translate-y-4 scale-[0.99] relative w-full max-w-[480px] z-10">
         <div className="glass-card p-8 sm:p-10 border border-white/5 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
           {/* Subtle top glow */}
           <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent" />
 
           <div className="text-center mb-8">
-            <h1 className="signup-element text-3xl font-black text-white mb-3 tracking-tight">
+            <h1 className="signup-element opacity-0 translate-y-2 text-3xl font-black text-white mb-3 tracking-tight">
               Create Account
             </h1>
-            <p className="signup-element text-sm text-zinc-500 font-medium">
+            <p className="signup-element opacity-0 translate-y-2 text-sm text-zinc-500 font-medium">
               Join 5,000+ creators optimizing their earnings
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="signup-element p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-black uppercase tracking-widest text-center">
+              <div className="signup-element opacity-0 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-black uppercase tracking-widest text-center">
                 {error}
               </div>
             )}
@@ -173,7 +170,7 @@ const SignupPage = () => {
                 type="button"
                 disabled={isGoogleLoading}
                 onClick={handleGoogleLogin}
-                className="signup-element flex w-full mx-auto items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="signup-element opacity-0 flex w-full mx-auto items-center justify-center space-x-3 bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all group cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isGoogleLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin text-white" />
@@ -186,7 +183,7 @@ const SignupPage = () => {
               </button>
             </div>
 
-            <div className="signup-element flex flex-col sm:flex-row gap-4">
+            <div className="signup-element opacity-0 flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1 flex items-center group">
                 <div className="absolute left-4 text-zinc-500 group-focus-within:text-primary transition-colors">
                   <User className="w-4 h-4" />
@@ -217,7 +214,7 @@ const SignupPage = () => {
               </div>
             </div>
 
-            <div className="signup-element relative flex items-center group">
+            <div className="signup-element opacity-0 relative flex items-center group">
               <div className="absolute left-4 text-zinc-500 group-focus-within:text-primary transition-colors">
                 <Mail className="w-4 h-4" />
               </div>
@@ -232,7 +229,7 @@ const SignupPage = () => {
               />
             </div>
 
-            <div className="signup-element relative flex items-center group">
+            <div className="signup-element opacity-0 relative flex items-center group">
               <div className="absolute left-4 text-zinc-500 group-focus-within:text-primary transition-colors">
                 <Lock className="w-4 h-4" />
               </div>
@@ -249,7 +246,7 @@ const SignupPage = () => {
 
             <button
               disabled={isLoading}
-              className="signup-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="signup-element opacity-0 w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <div
                 className={`absolute inset-0 bg-linear-to-r from-primary to-secondary transition-opacity ${isLoading ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
