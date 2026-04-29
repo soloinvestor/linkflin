@@ -179,7 +179,7 @@ const ClaudeIntegration = () => {
                 className="chat-card glass-card p-6 border border-white/5 relative group hover:border-white/10 transition-colors"
               >
                 <div className="flex items-start space-x-4">
-                  <div className="mt-1 flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="mt-1 shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                     <MessageSquare className="h-4 w-4 text-primary" />
                   </div>
                   <div>

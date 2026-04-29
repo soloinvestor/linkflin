@@ -94,26 +94,26 @@ const SignupPage = () => {
       });
 
       // Entrance Animation
-      const tl = gsap.timeline({ delay: 0.2 });
+      const tl = gsap.timeline();
 
       tl.from(".signup-card", {
-        y: 40,
+        y: 20,
         opacity: 0,
-        duration: 1,
-        ease: "power4.out",
+        scale: 0.98,
+        duration: 0.8,
+        ease: "power3.out",
       }).from(
         ".signup-element",
         {
-          y: 20,
+          y: 10,
           opacity: 0,
-          stagger: 0.08,
           duration: 0.8,
           ease: "power3.out",
           onComplete: function () {
             gsap.set(this.targets(), { clearProps: "all" });
           },
         },
-        "-=0.6",
+        "<",
       );
     }, containerRef);
 
@@ -123,7 +123,7 @@ const SignupPage = () => {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen w-full bg-[#030303] flex items-center justify-center p-4 overflow-hidden selection:bg-primary/30"
+      className="relative min-h-screen w-full bg-background flex items-center justify-center p-4 overflow-hidden selection:bg-primary/30"
     >
       {/* Dynamic Background */}
       <div
@@ -132,7 +132,6 @@ const SignupPage = () => {
       >
         <div className="glow-1 absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#6366f1]/10 blur-[120px] rounded-full" />
         <div className="glow-2 absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[150px] rounded-full" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150" />
       </div>
 
       {/* Back to Home */}
@@ -150,7 +149,7 @@ const SignupPage = () => {
       <div className="signup-card relative w-full max-w-[480px] z-10">
         <div className="glass-card p-8 sm:p-10 border border-white/5 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
           {/* Subtle top glow */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-linear-to-r from-transparent via-primary/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent" />
 
           <div className="text-center mb-8">
             <h1 className="signup-element text-3xl font-black text-white mb-3 tracking-tight">
@@ -198,7 +197,7 @@ const SignupPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="First Name"
-                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
+                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/8 transition-all"
                 />
               </div>
               <div className="relative flex-1 flex items-center group">
@@ -212,7 +211,7 @@ const SignupPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="Last Name"
-                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
+                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/8 transition-all"
                 />
               </div>
             </div>
@@ -228,7 +227,7 @@ const SignupPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="Work Email"
-                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
+                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary/50 focus:bg-white/8 transition-all"
               />
             </div>
 
@@ -243,7 +242,7 @@ const SignupPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="Create Password"
-                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/[0.08] transition-all"
+                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/8 transition-all"
               />
             </div>
 
@@ -251,7 +250,9 @@ const SignupPage = () => {
               disabled={isLoading}
               className="signup-element w-full relative overflow-hidden group rounded-2xl bg-white py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <div className={`absolute inset-0 bg-linear-to-r from-primary to-secondary transition-opacity ${isLoading ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
+              <div
+                className={`absolute inset-0 bg-linear-to-r from-primary to-secondary transition-opacity ${isLoading ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+              />
               <div className="relative z-10 flex items-center justify-center space-x-2">
                 {isLoading && (
                   <Loader2 className="w-4 h-4 animate-spin text-white" />

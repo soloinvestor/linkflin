@@ -71,7 +71,7 @@ const Hero = () => {
             >
               {checklist.map((item) => (
                 <div key={item} className="flex items-center space-x-3 group">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <div className="shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Check className="h-3 w-3 text-primary" />
                   </div>
                   <span className="text-sm font-medium text-zinc-400 group-hover:text-zinc-300 transition-colors">
@@ -98,13 +98,13 @@ const Hero = () => {
                   {[
                     "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=60",
                     "https://images.unsplash.com/photo-1615109398623-88346a601842?w=100&auto=format&fit=crop&q=60",
-                    "https://images.unsplash.com/photo-1508341591423-4347099e1f19?w=100&auto=format&fit=crop&q=60"
+                    "https://images.unsplash.com/photo-1508341591423-4347099e1f19?w=100&auto=format&fit=crop&q=60",
                   ].map((url, i) => (
                     <img
                       key={i}
                       src={url}
                       alt={`User ${i + 1}`}
-                      className="w-8 h-8 rounded-full border-2 border-[#030303] object-cover"
+                      className="w-8 h-8 rounded-full border-2 border-background object-cover"
                     />
                   ))}
                 </div>

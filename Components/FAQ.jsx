@@ -125,8 +125,8 @@ const FAQ = () => {
               key={i}
               className={`faq-item glass-card rounded-2xl border border-white/5 overflow-hidden transition-all duration-300 ${
                 openIndex === i
-                  ? "bg-white/[0.05] border-white/10"
-                  : "hover:bg-white/[0.02]"
+                  ? "bg-white/2 border-white/10"
+                  : "hover:bg-white/2"
               }`}
             >
               <button

@@ -53,7 +53,7 @@ const Loader = ({ onComplete }) => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#030303]"
+      className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-background"
     >
       <div className="relative flex flex-col items-center">
         {/* Logo Animation */}
