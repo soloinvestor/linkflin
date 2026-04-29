@@ -74,6 +74,20 @@ const SignupPage = () => {
   };
 
   useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          router.push("/dashboard");
+        }
+      } catch (err) {
+        // Not logged in, stay on page
+      }
+    };
+    checkSession();
+  }, [router]);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
       // Background Glows Animation
       gsap.to(".glow-1", {
@@ -197,7 +211,7 @@ const SignupPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="First Name"
-                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/8 transition-all"
+                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary/50 focus:bg-white/8 transition-all"
                 />
               </div>
               <div className="relative flex-1 flex items-center group">
@@ -211,7 +225,7 @@ const SignupPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="Last Name"
-                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/8 transition-all"
+                  className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary/50 focus:bg-white/8 transition-all"
                 />
               </div>
             </div>
@@ -242,7 +256,7 @@ const SignupPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="Create Password"
-                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-hidden focus:border-primary/50 focus:bg-white/8 transition-all"
+                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary/50 focus:bg-white/8 transition-all"
               />
             </div>
 
