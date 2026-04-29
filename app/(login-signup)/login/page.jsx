@@ -63,6 +63,20 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          router.push("/dashboard");
+        }
+      } catch (err) {
+        // Not logged in, stay on page
+      }
+    };
+    checkSession();
+  }, [router]);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
       // Background Glows Animation
       gsap.to(".glow-1", {

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, Shield, Lock, Globe, Zap, MousePointer2 } from "lucide-react";
 
@@ -87,12 +88,12 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="mt-12 flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8"
             >
-              <button className="relative group">
+              <Link href="/signup" className="relative group">
                 <div className="absolute -inset-0.5 bg-linear-to-r from-primary to-[#6366f1] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300" />
                 <div className="relative rounded-xl bg-primary px-8 py-5 text-base font-bold text-white hover:bg-primary-dark transition-all text-center">
                   Create Your First Smart Link
                 </div>
-              </button>
+              </Link>
               <div className="flex items-center space-x-2">
                 <div className="flex -space-x-2">
                   {[

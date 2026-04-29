@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -28,16 +29,12 @@ const CTA = () => {
               their international affiliate infrastructure.
             </p>
             <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 0 30px rgba(148, 153, 232, 0.4)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto rounded-2xl bg-white px-10 py-5 text-lg font-bold text-black transition-all hover:bg-zinc-100"
+              <Link
+                href="/signup"
+                className="w-full sm:w-auto text-center rounded-2xl bg-white px-10 py-5 text-lg font-bold text-black transition-all hover:bg-zinc-100 hover:scale-105 active:scale-95 block shadow-[0_0_20px_rgba(255,255,255,0.1)]"
               >
                 Create Free Account
-              </motion.button>
+              </Link>
               <button className="text-lg font-bold text-white flex items-center group px-8 py-5">
                 Contact Sales <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-2 text-primary" />
               </button>
