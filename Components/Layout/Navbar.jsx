@@ -321,14 +321,12 @@ const Navbar = () => {
           >
             <Link
               href="/login"
-              onClick={(e) => handleNav(e, "/login")}
               className="text-xs font-bold cursor-pointer uppercase tracking-widest text-zinc-500 hover:text-white transition-colors"
             >
               Log In
             </Link>
             <Link
               href="/signup"
-              onClick={(e) => handleNav(e, "/signup")}
               className="relative overflow-hidden cursor-pointer group rounded-full bg-white px-8 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity" />

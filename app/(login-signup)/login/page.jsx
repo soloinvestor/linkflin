@@ -63,20 +63,6 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch("/api/auth/me");
-        if (res.ok) {
-          router.push("/dashboard");
-        }
-      } catch (err) {
-        // Not logged in, stay on page
-      }
-    };
-    checkSession();
-  }, [router]);
-
-  useEffect(() => {
     const ctx = gsap.context(() => {
       // Background Glows Animation
       gsap.to(".glow-1", {
@@ -100,23 +86,24 @@ const LoginPage = () => {
       const tl = gsap.timeline();
 
       tl.from(".login-card", {
-        y: 20,
+        y: 10,
         opacity: 0,
-        scale: 0.98,
-        duration: 0.8,
-        ease: "power3.out",
+        scale: 0.99,
+        duration: 0.4,
+        ease: "power2.out",
       }).from(
         ".login-element",
         {
-          y: 10,
+          y: 5,
           opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
+          duration: 0.3,
+          stagger: 0.05,
+          ease: "power2.out",
           onComplete: function () {
             gsap.set(this.targets(), { clearProps: "all" });
           },
         },
-        "<",
+        "-=0.2",
       );
     }, containerRef);
 
