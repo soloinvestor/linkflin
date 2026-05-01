@@ -69,6 +69,9 @@ export default function DashboardLayout({ children }) {
         opacity: 0,
         duration: 1,
         ease: "power4.out",
+        onComplete: function () {
+          gsap.set(this.targets(), { clearProps: "all" });
+        },
       });
     }, containerRef);
 
@@ -129,7 +132,7 @@ export default function DashboardLayout({ children }) {
       {/* Sidebar */}
       <aside
         className={`
-        dash-sidebar fixed lg:static inset-y-0 left-0 z-40 w-72 bg-[#050505] border-r border-white/5 flex flex-col p-8 transition-transform duration-300
+        dash-sidebar fixed lg:sticky lg:top-0 lg:h-screen inset-y-0 left-0 z-40 w-72 bg-[#050505] border-r border-white/5 flex flex-col p-8 transition-transform duration-300
         ${isSidebarOpen ? "translate-x-0 shadow-[20px_0_50px_rgba(0,0,0,0.5)]" : "-translate-x-full lg:translate-x-0"}
       `}
       >
@@ -146,11 +149,14 @@ export default function DashboardLayout({ children }) {
         {/* Navigation */}
         <nav className="flex-1 space-y-1">
           {menuItems.map((item, i) => {
-            const isActive = pathname === item.href;
+            const isActive = item.href === "/dashboard" 
+              ? pathname === "/dashboard" 
+              : pathname.startsWith(item.href);
             return (
               <Link
                 href={item.href}
                 key={i}
+                onClick={() => setIsSidebarOpen(false)}
                 className={`w-full flex items-center space-x-4 px-4 py-3.5 rounded-2xl transition-all group ${
                   isActive
                     ? "bg-primary/10 text-primary border border-primary/10 shadow-[0_0_30px_rgba(99,102,241,0.05)]"
@@ -210,7 +216,7 @@ export default function DashboardLayout({ children }) {
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto">{children}</div>
+      <main className="flex-1 overflow-y-auto pt-20 lg:pt-0">{children}</main>
     </div>
   );
 }
