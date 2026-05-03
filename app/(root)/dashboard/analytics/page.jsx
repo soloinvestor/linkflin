@@ -107,7 +107,7 @@ const AnalyticsPage = () => {
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="glass-card p-6 border border-white/5 bg-white/[0.02]"
+              className="glass-card p-6 border border-white/5 bg-white/2"
             >
               <div className="flex items-center justify-between mb-4">
                 <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">
@@ -123,7 +123,7 @@ const AnalyticsPage = () => {
         </div>
 
         {/* Chart Visualization (Simulated) */}
-        <div className="animate-up glass-card border border-white/5 bg-white/[0.01] p-8 min-h-[600px] overflow-hidden">
+        <div className="animate-up glass-card border border-white/5 bg-white/1 p-8 min-h-[600px] overflow-hidden">
           <div className="flex items-end justify-between h-64 gap-2 mb-20 opacity-20">
             {[40, 70, 45, 90, 65, 80, 30, 60, 85, 50, 75, 40, 95, 60].map(
               (h, i) => (
@@ -153,7 +153,7 @@ const AnalyticsPage = () => {
       {/* Central Overlay Card (Only visible when no links) */}
       {!hasLinks && (
         <div className="fixed inset-0 z-35 flex items-center justify-center p-4 lg:pl-72 pt-24 lg:pt-0 pointer-events-none overflow-y-auto">
-          <div className="w-full max-w-lg bg-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-10 shadow-[0_40px_100px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in duration-700 pointer-events-auto my-auto">
+          <div className="w-full max-w-lg bg-white rounded-3xl sm:rounded-4xl p-6 sm:p-10 shadow-[0_40px_100px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in duration-700 pointer-events-auto my-auto">
             <h2 className="text-xl sm:text-2xl font-black text-black mb-2 sm:mb-3 tracking-tight leading-tight">
               Your analytics will appear here
             </h2>

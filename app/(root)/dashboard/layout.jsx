@@ -149,9 +149,10 @@ export default function DashboardLayout({ children }) {
         {/* Navigation */}
         <nav className="flex-1 space-y-1">
           {menuItems.map((item, i) => {
-            const isActive = item.href === "/dashboard" 
-              ? pathname === "/dashboard" 
-              : pathname.startsWith(item.href);
+            const isActive =
+              item.href === "/dashboard"
+                ? pathname === "/dashboard"
+                : pathname.startsWith(item.href);
             return (
               <Link
                 href={item.href}
@@ -175,40 +176,45 @@ export default function DashboardLayout({ children }) {
         </nav>
 
         {/* Sidebar Bottom Profile */}
-        <div className="mt-auto pt-8 border-t border-white/5 space-y-6">
+        <div className="mt-auto pt-8 border-t border-white/5 space-y-8">
           <div className="flex items-center space-x-4 px-2">
-            <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-primary/20 to-secondary/20 border border-white/10 flex items-center justify-center text-primary font-black shadow-inner">
+            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xl font-black shadow-[0_0_20px_rgba(148,153,232,0.1)]">
               {user?.firstName?.[0] || "U"}
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-xs font-black text-white truncate uppercase tracking-widest">
+              <h4 className="text-sm font-black text-white truncate">
                 {user?.firstName || "Creator"}
               </h4>
-              <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mt-0.5">
-                Free Plan
-              </p>
+              <div className="space-y-0.5 mt-1">
+                <p className="text-[11px] font-medium text-zinc-500">
+                  <span className="font-black text-zinc-400">Free</span> Plan
+                </p>
+                <Link
+                  href="/subscribe"
+                  className="block text-[11px] font-bold text-primary hover:text-white transition-colors"
+                >
+                  Upgrade to Starter
+                </Link>
+              </div>
             </div>
-            <button className="text-zinc-600 hover:text-primary transition-colors">
-              <ChevronRight className="w-4 h-4" />
-            </button>
           </div>
 
           <button
             onClick={handleLogout}
-            className="w-full cursor-pointer flex items-center space-x-4 px-4 py-3 text-zinc-500 hover:text-red-400 transition-all group rounded-2xl hover:bg-red-500/5"
+            className="w-full cursor-pointer flex items-center space-x-4 px-4 py-3 text-zinc-500 hover:text-white transition-all group rounded-2xl hover:bg-white/5"
           >
             <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-black uppercase tracking-widest">
+            <span className="text-xs font-black uppercase tracking-[0.2em]">
               Logout
             </span>
           </button>
 
-          <div className="flex items-center justify-center space-x-4 text-[9px] font-black uppercase tracking-widest text-zinc-700">
-            <Link href="#" className="hover:text-zinc-400 transition-colors">
+          <div className="flex items-center justify-center space-x-3 text-[10px] font-black uppercase tracking-widest text-zinc-700">
+            <Link href="#" className="hover:text-zinc-500 transition-colors">
               Terms
             </Link>
             <span className="w-1 h-1 bg-zinc-800 rounded-full" />
-            <Link href="#" className="hover:text-zinc-400 transition-colors">
+            <Link href="#" className="hover:text-zinc-500 transition-colors">
               Privacy
             </Link>
           </div>
