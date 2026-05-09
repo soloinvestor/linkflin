@@ -12,7 +12,7 @@ export async function POST(req) {
     // Find user and include password for comparison
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return new Response(JSON.stringify({ message: "Invalid credentials" }), {
+      return new Response(JSON.stringify({ message: "User not found" }), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       });
@@ -21,7 +21,7 @@ export async function POST(req) {
     // Compare passwords
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      return new Response(JSON.stringify({ message: "Invalid credentials" }), {
+      return new Response(JSON.stringify({ message: "Invalid password" }), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       });

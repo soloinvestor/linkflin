@@ -56,7 +56,7 @@ const SettingsPage = () => {
           setUser({
             firstName: data.firstName || "User",
             lastName: data.lastName || "",
-            email: data.email || ""
+            email: data.email || "",
           });
           setLoading(false);
         } else {

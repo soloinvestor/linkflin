@@ -43,7 +43,7 @@ const FAQ = () => {
     {
       question: "How does this compare to Bitly?",
       answer:
-        "Bitly is a URL shortener — it makes links shorter, but it doesn't make them smarter. Bitly has no geo-routing (international viewers still land on the wrong storefront), no deep linking (mobile clicks open in a browser, not the app), and no link health monitoring. Youfiliate is a smart link platform: every link geo-targets clicks to local stores, opens merchant apps on mobile, gets monitored 24/7, and costs a flat monthly rate with unlimited clicks.",
+        "Bitly is a URL shortener — it makes links shorter, but it doesn't make them smarter. Bitly has no geo-routing (international viewers still land on the wrong storefront), no deep linking (mobile clicks open in a browser, not the app), and no link health monitoring. Linkflin is a smart link platform: every link geo-targets clicks to local stores, opens merchant apps on mobile, gets monitored 24/7, and costs a flat monthly rate with unlimited clicks.",
     },
     {
       question: "How does this compare to URL Genius?",
