@@ -15,6 +15,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const containerRef = useRef(null);
   const formRef = useRef(null);
@@ -38,10 +39,19 @@ const LoginPage = () => {
         throw new Error(data.message || "Invalid credentials");
       }
 
-      router.push("/dashboard");
+      setSuccess("Login successful! Redirecting...");
+      
+      // Short delay to show the success message
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
     } catch (err) {
-      setError(err.message);
-    } finally {
+      const errMsg = err.message.toLowerCase();
+      if (errMsg.includes("password")) {
+        setError("Password Incorrect");
+      } else {
+        setError("Something went wrong");
+      }
       setIsLoading(false);
     }
   };
@@ -149,8 +159,13 @@ const LoginPage = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="login-element opacity-0 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-black uppercase tracking-widest text-center">
+              <div className="login-element p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-[10px] font-black uppercase tracking-widest text-center">
                 {error}
+              </div>
+            )}
+            {success && (
+              <div className="login-element p-4 bg-primary/10 border border-primary/20 rounded-2xl text-primary text-[10px] font-black uppercase tracking-widest text-center">
+                {success}
               </div>
             )}
             {/* Social Logins */}
